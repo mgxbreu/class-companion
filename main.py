@@ -1,16 +1,14 @@
 import tkinter as tk
 import cv2
-# import numpy as np
 import requests
 import json
 from PIL import Image, ImageTk
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from msrest.authentication import CognitiveServicesCredentials
-# import azure.cognitiveservices.speech as speechsdk
-# import os
 import pyttsx3
 from text import read_text_in_image
 from sound import say_text_outloud
+
 # Load the Azure credentials from config.json
 config = json.load(open("config.json"))
 vision_creds = config["credentials"]["vision"]
@@ -21,11 +19,6 @@ endpoint = vision_creds["endpoint"]
 computervision_client = ComputerVisionClient(
     endpoint, CognitiveServicesCredentials(subscription_key))
 
-# Set up Azure Text to Speech client
-# speech_creds = config["credentials"]["speech"]
-# speech_config = speechsdk.SpeechConfig(
-#     subscription= speech_creds["subskey"], region= speech_creds["region"])
-# speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
 
 synthesizer = pyttsx3.init()
 
@@ -86,10 +79,6 @@ def update_frame():
         say_text_outloud(description)
         result_label.config(text=description)
 
-
-
-
-
     # Schedule the next update
     root.after(10, update_frame)
 
@@ -98,4 +87,3 @@ update_frame()
 
 # Start the Tkinter main loop
 root.mainloop()
-# 

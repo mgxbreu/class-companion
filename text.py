@@ -46,6 +46,4 @@ def read_text_in_image(image_path):
                 for line in page.lines:
                     complete_text += line.text
                     print(line.text)
-                    # Uncomment the following line if you'd like to see the bounding box 
-        # complete_text = "Text in image" + complete_text
         return complete_text
