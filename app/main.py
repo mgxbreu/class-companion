@@ -8,6 +8,7 @@ from msrest.authentication import CognitiveServicesCredentials
 import pyttsx3
 from app.text import read_text_in_image
 from app.sound import say_text_outloud
+from app.utils.constants import VISUAL_ANALYSIS_PATH
 
 # Load the Azure credentials from config.json
 config = json.load(open("config.json"))
@@ -57,7 +58,7 @@ def update_frame():
         headers = {'Content-Type': 'application/octet-stream',
                    'Ocp-Apim-Subscription-Key': subscription_key}
         response = requests.post(
-            endpoint + "/vision/v3.2/analyze?visualFeatures=Description,Objects", headers=headers, data=cv2.imencode('.jpg', frame)[1].tobytes())
+            endpoint + VISUAL_ANALYSIS_PATH, headers=headers, data=cv2.imencode('.jpg', frame)[1].tobytes())
         analysis = response.json()
 
         img_counter = 0

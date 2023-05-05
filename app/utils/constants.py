@@ -1,0 +1,1 @@
+VISUAL_ANALYSIS_PATH = "/vision/v3.2/analyze?visualFeatures=Description,Objects"
