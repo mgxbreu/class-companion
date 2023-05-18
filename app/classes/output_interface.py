@@ -8,6 +8,8 @@ class OutputInterface():
         self.label = None
         self.image = None
         self.build_interface()
+        self.create_image()
+        self.create_label()
 
     def build_interface(self):
         self.root.geometry(self.window_resolution)
@@ -24,10 +26,13 @@ class OutputInterface():
 
     def update_frame(self, new_photo):
         self.image.config(image=new_photo)
-        self.image.image =new_photo
+        self.image.image = new_photo
 
     def update_label(self, new_label):
         self.label.config(text=new_label)
+
+    def schedule_next_update(self, callback):
+        self.root.after(10, callback)
 
     def run(self):
         self.root.mainloop()
