@@ -2,10 +2,10 @@ import pyttsx3
 engine = pyttsx3.init()
 
 """ RATE"""
-engine.setProperty('rate', 210)     # setting up new voice rate                      #printing current voice rate
+engine.setProperty('rate', 210)
 
 """VOLUME"""
-engine.setProperty('volume', 1)    # setting up volume level  between 0 and 1
+engine.setProperty('volume', 1) 
 
 """VOICE"""
 voices = engine.getProperty('voices')

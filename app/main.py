@@ -11,17 +11,6 @@ from app.sound import say_text_outloud
 from app.utils.constants import VISUAL_ANALYSIS_PATH
 from app.services.computer_vision import get_photo_description
 
-# Load the Azure credentials from config.json
-config = json.load(open("config.json"))
-vision_creds = config["credentials"]["vision"]
-
-# Set up the Computer Vision client
-subscription_key = vision_creds["subskey"]
-endpoint = vision_creds["endpoint"]
-computervision_client = ComputerVisionClient(
-    endpoint, CognitiveServicesCredentials(subscription_key))
-
-
 # Set up the Tkinter GUI
 root = tk.Tk()
 root.geometry("800x600")
