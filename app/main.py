@@ -6,13 +6,14 @@ from PIL import Image, ImageTk
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from msrest.authentication import CognitiveServicesCredentials
 import pyttsx3
-from app.text import read_text_in_image
+from app.classes.image_processing import ImageProcessing
 from app.classes.sound import SoundEngine
 from app.utils.constants import VISUAL_ANALYSIS_PATH, TEXT_FILE_PATH
 from app.services.computer_vision import get_photo_description
 
 
 sound_engine = SoundEngine("man", TEXT_FILE_PATH)
+image_processing = ImageProcessing()
 
 # Set up the Tkinter GUI
 root = tk.Tk()
@@ -52,7 +53,7 @@ def update_frame():
         print("Screenshot taken")
         img_counter += 1
         
-        description_from_text = read_text_in_image(img_name)
+        description_from_text = image_processing.read_text_in_image(img_name)
    
         if description_from_text:
             description = "Text in front of you " + description_from_text 

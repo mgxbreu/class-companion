@@ -1,30 +1,45 @@
-import cv2
-from PIL import Image, ImageTk
+from azure.cognitiveservices.vision.computervision import ComputerVisionClient
+from msrest.authentication import CognitiveServicesCredentials
+from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
+import json
+import time
+
+config = json.load(open("config.json"))
+vision_creds = config["credentials"]["vision"]
+
+subscription_key = vision_creds["subskey"]
+endpoint = vision_creds["endpoint"]
+computervision_client = ComputerVisionClient(
+    endpoint, CognitiveServicesCredentials(subscription_key))
+
 
 class ImageProcessing():
 
     def __init__(self):
-        self.frame = None
-        self.ret = None
-        self.processed_photo = None
+        self.read_results = None
+        self.end_text = ""
 
-    def take_picture(self):
-        capture = cv2.VideoCapture(0)
-        ret, frame = capture.read()
-        self.frame = frame
-        self.ret
-        cv2.imwrite("image.jpg", frame)
-        return self.frame
+    def read_text_in_image(self, image_path):
+        with open(image_path, mode="rb") as image_data:
+            operation_id = self.get_operation_id(image_data)
 
-    def convert_opencv_to_pillow(self):
-        image = Image.fromarray(cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB))
-        # Update the label with the new image
-        processed_photo = ImageTk.PhotoImage(image)
-        processed_photo = ImageTk.PhotoImage(processed_photo)
-        return self.processed_photo
+            while True:
+                read_results = computervision_client.get_read_result(operation_id)
+                if read_results.status not in [OperationStatusCodes.running, OperationStatusCodes.not_started]:
+                    break
+                time.sleep(1)
+
+            return self.end_text
+
+    def get_operation_id(self, image_data):
+        read_operation = computervision_client.read_in_stream(image_data, raw=True)
+        operation_location = read_operation.headers["Operation-Location"]
+        operation_id = operation_location.split("/")[-1]
+
+        return operation_id
     
-    def convert_to_displayable_photo(self):
-        if self.ret:
-            self.convert_opencv_to_pillow()
-            return self.processed_photo
-        return
+    def process_line_by_line(self):
+        if self.read_results.status == OperationStatusCodes.succeeded:
+            for page in self.read_results.analyze_result.read_results:
+                for line in page.lines:
+                    self.end_text += line.text
