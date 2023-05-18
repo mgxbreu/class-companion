@@ -5,23 +5,22 @@ class ImageConversion():
 
     def __init__(self):
         self.frame = None
-        self.ret = None
+        # self.ret = None
         self.processed_photo = None
+        self.capture = None
 
     def take_picture(self):
-        capture = cv2.VideoCapture(0)
-        ret, frame = capture.read()
-        self.frame = frame
-        self.ret
-        cv2.imwrite("image.jpg", frame)
+        self.capture = cv2.VideoCapture(0)
+        return self.capture
+
+    def get_frame(self):
+        ret, frame = self.capture.read()
+        self.frame = frame if ret else None
         return self.frame
 
-    def convert_opencv_to_pillow(self):
+    def convert_opencv_to_pillow_image(self):
         image = Image.fromarray(cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB))
-        # Update the label with the new image
-        processed_photo = ImageTk.PhotoImage(image)
-        processed_photo = ImageTk.PhotoImage(processed_photo)
-        return self.processed_photo
+        self.processed_photo = ImageTk.PhotoImage(image)
     
     def convert_to_displayable_photo(self):
         if self.ret:
