@@ -7,9 +7,12 @@ from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from msrest.authentication import CognitiveServicesCredentials
 import pyttsx3
 from app.text import read_text_in_image
-from app.sound import say_text_outloud
-from app.utils.constants import VISUAL_ANALYSIS_PATH
+from app.classes.sound import SoundEngine
+from app.utils.constants import VISUAL_ANALYSIS_PATH, TEXT_FILE_PATH
 from app.services.computer_vision import get_photo_description
+
+
+sound_engine = SoundEngine("man", TEXT_FILE_PATH)
 
 # Set up the Tkinter GUI
 root = tk.Tk()
@@ -56,7 +59,7 @@ def update_frame():
             result_label.config(text=description)
         
 
-        say_text_outloud(description)
+        sound_engine.say_text_outloud(description)
         result_label.config(text=description)
 
     # Schedule the next update
