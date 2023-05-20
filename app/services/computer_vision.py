@@ -1,13 +1,9 @@
 import requests
-import json
 import cv2
 from app.utils.constants import VISUAL_ANALYSIS_PATH
+from app.utils.credentials import get_credentials_list 
 
-config = json.load(open("config.json"))
-vision_creds = config["credentials"]["vision"]
-
-subscription_key = vision_creds["subskey"]
-endpoint = vision_creds["endpoint"]
+subscription_key, endpoint = get_credentials_list("vision")
 
 def get_photo_description(extension, photo):
     headers = {'Content-Type': 'application/octet-stream',
