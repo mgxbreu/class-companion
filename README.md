@@ -19,11 +19,6 @@ This project was made for my university to help visually impaired students to be
       "subskey": "your-key",
       "endpoint": "your-enpdoint"
             },
-    "speech": {
-      "subskey": "your-key",
-      "endpoint": "your-endpoint",
-      "region": "your-region"
-            }
         }
     }
    ```
