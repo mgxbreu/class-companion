@@ -1,0 +1,6 @@
+opencv-python #4.7.0
+azure.cognitiveservices.vision.computervision
+requests
+pyttsx3
+tkinter
+Pillow
