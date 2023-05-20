@@ -1,5 +1,4 @@
 import pyttsx3
-from app.utils.constants import TEXT_FILE_PATH
 from app.utils.file_reading import save_text, read_text
 
 class SoundEngine():

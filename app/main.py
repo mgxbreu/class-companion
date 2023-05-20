@@ -1,16 +1,9 @@
-import tkinter as tk
 import cv2
-import requests
-import json
-from PIL import Image, ImageTk
-from azure.cognitiveservices.vision.computervision import ComputerVisionClient
-from msrest.authentication import CognitiveServicesCredentials
-import pyttsx3
 from app.classes.image_processing import ImageProcessing
 from app.classes.image_conversion import ImageConversion
 from app.classes.sound import SoundEngine
 from app.classes.output_interface import OutputInterface
-from app.utils.constants import VISUAL_ANALYSIS_PATH, TEXT_FILE_PATH
+from app.utils.constants import TEXT_FILE_PATH
 from app.services.computer_vision import get_photo_description
 
 sound_engine = SoundEngine("man", TEXT_FILE_PATH)
@@ -20,7 +13,6 @@ image_conversion = ImageConversion()
 
 
 capture = image_conversion.take_picture()
-pre_description= ''
 
 def update_frame():
     frame = image_conversion.get_frame()
