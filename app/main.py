@@ -1,9 +1,9 @@
-import cv2
 from app.classes.image_processing import ImageProcessing
 from app.classes.image_conversion import ImageConversion
 from app.classes.sound import SoundEngine
 from app.classes.output_interface import OutputInterface
-from app.utils.constants import TEXT_FILE_PATH
+from app.utils.image import write_image, get_image_name
+from app.utils.constants import TEXT_FILE_PATH, IMAGE_NAME
 from app.services.computer_vision import get_photo_description
 
 sound_engine = SoundEngine("man", TEXT_FILE_PATH)
@@ -23,14 +23,12 @@ def update_frame():
         
         interface.update_frame(processed_photo)
 
-        img_counter = 0
-        img_name = "opencv_frame_{}.png".format(img_counter)
-        cv2.imwrite(img_name, frame)
+        image_name = get_image_name(IMAGE_NAME)
+        write_image(image_name, frame)
         print("Screenshot taken")
-        img_counter += 1
         
         description = get_photo_description('.jpg', frame)
-        description_from_text = image_processing.read_text_in_image(img_name)
+        description_from_text = image_processing.read_text_in_image(image_name)
    
         if description_from_text:
             description = "Text in front of you " + description_from_text 

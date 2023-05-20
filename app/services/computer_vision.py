@@ -13,7 +13,7 @@ def get_photo_description(extension, photo):
     headers = {'Content-Type': 'application/octet-stream',
                'Ocp-Apim-Subscription-Key': subscription_key}
     response = requests.post(
-        endpoint + VISUAL_ANALYSIS_PATH, headers=headers, data=cv2.imencode('.jpg', photo)[1].tobytes())
+        endpoint + VISUAL_ANALYSIS_PATH, headers=headers, data=cv2.imencode(extension, photo)[1].tobytes())
     analysis = response.json()
 
     description = analysis["description"]["captions"][0]["text"]
